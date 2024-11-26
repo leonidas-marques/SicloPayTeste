@@ -1,0 +1,70 @@
+{
+  "title": "Camiseta Personalizada",
+  "metafields": [
+    {
+      "namespace": "custom_fields",
+      "key": "material",
+      "type": "single_line_text_field",
+      "value": "Algodão"
+    }
+  ],
+  "productOptions": [
+    {
+      "name": "Cor",
+      "values": [
+        {
+          "name": "Vermelho"
+        },
+        {
+          "name": "Verde"
+        },
+        {
+          "name": "Azul"
+        }
+      ]
+    },
+    {
+      "name": "Tamanho",
+      "values": [
+        {
+          "name": "P"
+        },
+        {
+          "name": "M"
+        }
+      ]
+    }
+  ],
+  "status": "ACTIVE",
+  "descriptionHtml": "<p>Camiseta de alta qualidade, 100% algodão.</p>",
+  "tags": "roupas, camiseta, algodão",
+  "productType": "tipo1",
+  "variants": [
+    {
+      "optionValues": [
+        {
+          "name": "Amarelo",
+          "optionName": "Cor"
+        },
+        {
+          "name": "P",
+          "optionName": "Tamanho"
+        }
+      ],
+      "price": 51.0
+    },
+    {
+      "optionValues": [
+        {
+          "name": "Azul",
+          "optionName": "Cor"
+        },
+        {
+          "name": "P",
+          "optionName": "Tamanho"
+        }
+      ],
+      "price": 50.0
+    }
+  ]
+}

@@ -25,6 +25,8 @@ RUN rm -rf ./src
 
 EXPOSE 3000
 
+RUN npm test
+
 CMD ["node", "dist/server.js"]
 
 

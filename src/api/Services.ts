@@ -10,11 +10,25 @@ import { Product as ProductInterface } from "../interfaces/interfaces";
 // relacionado aos produtos do db, não da shopify
 export const ServicoProduto = {
   async obterTodosProdutos() {
-    return prisma.product.findMany({
-      include: {
-        variants: true, 
-      },
-    });
+    try {
+      const produtos = await prisma.product.findMany({
+        include: {
+          variants: true,
+        },
+      });
+      return produtos;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(
+          `Erro ao buscar produtos no banco de dados: ${error.message}`
+        );
+      } else {
+        // Se o erro não for uma instância de Error, lançar um erro genérico
+        throw new Error(
+          "Erro desconhecido ao buscar produtos no banco de dados"
+        );
+      }
+    }
   },
 
   async deletarProduto(id: number) {
