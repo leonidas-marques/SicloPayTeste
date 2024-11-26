@@ -8,18 +8,23 @@ API desenvolvida utilizando Node.js, TypeScript, Express, Prisma e PostgreSQL, e
 
 ## 📝 Setup
 
-Na pasta raiz do projeto
+Na pasta raiz do projeto:
 
 ```bash
 sudo docker-compose up --build 
 
 ```
-
+Depois da inicialização, abra outro terminal:
 
 ```bash
 sudo docker exec -it node_container bash
+```
+Logo após:
+
+```bash
 npx prisma generate
 npx prisma migrate dev --name init
+exit
 ```
 
 ## 🖥 Acessando o pgAdmin
