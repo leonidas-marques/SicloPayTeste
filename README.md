@@ -8,6 +8,8 @@ API desenvolvida utilizando Node.js, TypeScript, Express, Prisma e PostgreSQL, e
 
 ## 📝 Setup
 
+Tenha certeza de ter o arquivo .env enviado na raiz do projeto
+
 Na pasta raiz do projeto:
 
 ```bash
