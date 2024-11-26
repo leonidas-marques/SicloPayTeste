@@ -40,8 +40,8 @@ clique em adicionar novo servidor
 Na aba geral dê um nome a seu criteiro
 
 na aba conexão:
-Host name = postgres
-Username = user
+Host name = postgres,
+Username = user,
 Senha = password
 
 ## As rotas ficaram organizadas da seguinte forma
