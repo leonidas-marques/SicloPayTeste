@@ -8,6 +8,14 @@ API desenvolvida utilizando Node.js, TypeScript, Express, Prisma e PostgreSQL, e
 
 ## 📝 Setup
 
+Na pasta raiz do projeto
+
+```bash
+sudo docker-compose up --build 
+
+```
+
+
 ```bash
 sudo docker exec -it node_container bash
 npx prisma generate

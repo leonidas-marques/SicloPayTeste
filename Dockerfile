@@ -1,5 +1,5 @@
 # preferi a abordagem de compilar no proprio container para evitar possiveis erros
-# usando nodemon para melhorar o desenvolvimento 
+# executando os testes na inicialização do container
 
 FROM node:18
 
