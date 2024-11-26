@@ -1,0 +1,424 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Shopify do Teste de programação da Siclo pay",
+    "description": "API para o teste de programação da Siclo pay",
+    "contact": {
+      "email": "lmarqueslm@outlook.com"
+    },
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1/",
+      "description": "api de teste"
+    }
+  ],
+  "paths": {
+    "/products": {
+      "get": {
+        "summary": "Busca todos os produtos no banco de dados",
+        "description": "Retorna a lista de produtos armazenados no banco de dados Postgres.",
+        "tags": ["Products"],
+        "responses": {
+          "200": {
+            "description": "Lista de produtos recuperada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "example": "cm3v38vad0004kae5mxzaqegm"
+                      },
+                      "shopifyProductId": {
+                        "type": "string",
+                        "example": "gid://shopify/Product/14630481953133"
+                      },
+                      "title": {
+                        "type": "string",
+                        "example": "Galaxy Earrings"
+                      },
+                      "productType": {
+                        "type": "string",
+                        "example": "Earrings"
+                      },
+                      "description": {
+                        "type": "string",
+                        "example": "One set of galaxy earrings, with sterling silver clasps."
+                      },
+                      "variants": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "example": "cm3v38vad0005kae5gg3aoo6d"
+                            },
+                            "shopifyVariantId": {
+                              "type": "string",
+                              "example": "gid://shopify/ProductVariant/51685325177197"
+                            },
+                            "sku": {
+                              "type": ["string", "null"],
+                              "example": null
+                            },
+                            "barcode": {
+                              "type": ["string", "null"],
+                              "example": null
+                            },
+                            "price": {
+                              "type": "string",
+                              "example": "37.99"
+                            },
+                            "produtoId": {
+                              "type": "string",
+                              "example": "cm3v38vad0004kae5mxzaqegm"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro ao buscar os produtos no banco de dados.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Erro ao buscar os produtos no db."
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Descrição detalhada do erro."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/products/shopify": {
+      "post": {
+        "summary": "Cria produto no banco de dados e na Shopify",
+        "description": "Cria um novo produto na Shopify e armazena os detalhes no banco de dados Postgres",
+        "tags": ["Products"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "title",
+                  "metafields",
+                  "productOptions",
+                  "status",
+                  "variants"
+                ],
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "Camiseta Personalizada"
+                  },
+                  "metafields": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "namespace": {
+                          "type": "string",
+                          "example": "custom_fields"
+                        },
+                        "key": {
+                          "type": "string",
+                          "example": "material"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "single_line_text_field"
+                        },
+                        "value": {
+                          "type": "string",
+                          "example": "Algodão"
+                        }
+                      }
+                    }
+                  },
+                  "productOptions": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "example": "Cor"
+                        },
+                        "values": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "example": "Vermelho"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "ACTIVE"
+                  },
+                  "descriptionHtml": {
+                    "type": "string",
+                    "example": "<p>Camiseta de alta qualidade, 100% algodão.</p>"
+                  },
+                  "tags": {
+                    "type": "string",
+                    "example": "roupas, camiseta, algodão"
+                  },
+                  "productType": {
+                    "type": "string",
+                    "example": "tipo1"
+                  },
+                  "variants": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "optionValues": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "example": "Amarelo"
+                              },
+                              "optionName": {
+                                "type": "string",
+                                "example": "Cor"
+                              }
+                            }
+                          }
+                        },
+                        "price": {
+                          "type": "number",
+                          "example": 51.0
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "201": {
+            "description": "Produto criado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Produto criado com sucesso!"
+                    },
+                    "produtoId": {
+                      "type": "string",
+                      "example": "gid://shopify/Product/123456789101112"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação: o título do produto é obrigatório.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "O título do produto é obrigatório."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor ao criar o produto.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Erro ao criar produto"
+                    },
+                    "detalhes": {
+                      "type": "string",
+                      "example": "Descrição detalhada do erro."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/shopify/products": {
+      "get": {
+        "summary": "Buscar produtos na Shopify",
+        "description": "Busca todos os produtos disponíveis diretamente na Shopify e retorna a lista.",
+        "tags": ["Products"],
+        "responses": {
+          "200": {
+            "description": "Lista de produtos recuperada com sucesso da Shopify.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "example": "gid://shopify/Product/14630481232237"
+                      },
+                      "title": {
+                        "type": "string",
+                        "example": "7 Shakra Bracelet teste"
+                      },
+                      "productType": {
+                        "type": "string",
+                        "example": "Bracelet"
+                      },
+                      "description": {
+                        "type": "string",
+                        "example": "7 chakra bracelet, in blue or black."
+                      },
+                      "variants": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "example": "gid://shopify/ProductVariant/51685322490221"
+                            },
+                            "sku": {
+                              "type": ["string", "null"],
+                              "example": null
+                            },
+                            "barcode": {
+                              "type": ["string", "null"],
+                              "example": null
+                            },
+                            "price": {
+                              "type": "string",
+                              "example": "42.99"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro ao buscar os produtos na Shopify.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Erro ao buscar os produtos na shopify."
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Descrição detalhada do erro."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/shopify/products/sync": {
+      "post": {
+        "summary": "Sincronizar produtos da Shopify com o banco de dados",
+        "description": "Este endpoint busca todos os produtos da Shopify e sincroniza os dados com o banco de dados local. Ele realiza as seguintes operações:\n\n- **Criação**: Adiciona novos produtos ao banco de dados caso não existam.\n- **Atualização**: Atualiza produtos existentes no banco de dados se houver divergências com os dados da Shopify.\n- **Manutenção**: Mantém produtos que já existem e estão sincronizados, sem alterações.\n- **Exclusão**: Remove produtos do banco de dados local que foram excluídos na Shopify.",
+        "tags": ["Products"],
+        "responses": {
+          "200": {
+            "description": "Produtos sincronizados com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Produtos sincronizados com sucesso!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro ao sincronizar produtos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Erro ao sincronizar produtos"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

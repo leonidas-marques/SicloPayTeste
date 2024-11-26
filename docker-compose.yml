@@ -1,0 +1,48 @@
+version: "3.8"
+
+# especifiquei a versão da imagem do db para garantir a estabilidade do ambiente
+# isso evita que atualizações quebrem o ambiente
+# fiz o mesmo para o Node, só que no Dockerfile
+# guardei dados sensiveis no .env pois é uma boa pratica de segurança
+# instalei o pgadmin para facilitar a avaliação da api
+# acesse via http://localhost:8080/ o login e senha estão no .env
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres_container
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  nodejs:
+    build:
+      context: .
+    container_name: node_container
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    volumes:
+      - ./server:/app/server
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_container
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+
+volumes:
+  pg_data:

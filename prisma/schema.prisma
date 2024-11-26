@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL_PRISMA")
+}
+
+// na shopify o model tambem é com base em variantes, então tive que fazer o mesmo
+// os models a abaixo tem como objetivo serem só exemplos para o teste de programação
+model Product {
+  id               String    @id @default(cuid())
+  shopifyProductId String    @unique
+  title            String
+  productType      String
+  description      String
+  variants         Variant[]
+}
+
+model Variant {
+  id               String  @id @default(cuid())
+  shopifyVariantId String  @unique
+  sku              String?
+  barcode          String?
+  price            String?
+  produtoId        String
+  produto          Product @relation(fields: [produtoId], references: [id], onDelete: Cascade)
+}
